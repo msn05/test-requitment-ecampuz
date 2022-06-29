@@ -18,7 +18,7 @@ function loopingCondition($int)
       echo $i . ' : Foo';
     if ($i % 5 == 0)
       echo $i . ' : Bar';
-    if ($i % 3 && $i % 5 == 0)
+    if ($i % 3 == 0 || $i % 5 == 0)
       echo $i . ' :FooBar';
     echo $i . ': <br>';
     $i++;

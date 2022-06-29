@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (@$_SESSION['LogIn'] == true) {
+  header("location:home.php");
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -75,24 +81,45 @@
 <body class="text-center">
 
   <main class="form-signin w-100 m-auto">
-    <form>
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <form action="login.php" method="POST">
+      <h1 class="h3 mb-3 fw-normal">Signin Template · Bootstrap v5.2</h1>
       <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address <span> : test@gmail.com</span> </label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+        <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password <span> : 1234</span></label>
       </div>
-
       <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
     </form>
   </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 
+  <script>
+    $(document).ready(function() {
+      $('.btn-primary').on('click', function(e) {
+        e.preventDefault()
+        let form = $(this).parent()
+        $.ajax({
+          url: form.attr('action'),
+          data: form.serialize(),
+          method: 'POST',
+          processData: false,
+          dataType: 'JSON'
+        }).done(function(data) {
+          alert(data.message);
+          window.location.href = "home.php";
+        }).fail(function(xhr, status, responseJSON) {
+          alert(xhr.responseJSON.message)
+        })
+      })
 
-
+    })
+  </script>
 </body>
 
 </html>
